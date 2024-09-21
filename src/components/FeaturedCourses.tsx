@@ -19,7 +19,7 @@ export default function FeaturedCourses(){
     const featuredCourses=courseData.courses.filter((course:Course)=>course.isFeatured)
 
     return (
-        <div className="py-12 relative -z-1 -mt-10 rounded-t-[60px]  bg-gray-900 mb-5">
+        <div className="py-12 relative rounded-t-[60px]  bg-gray-900">
             <div>
                 <div className="text-center">
                     <h2 className="text-base text-teal-600 font-semibold tracking-wide uppercase">FEATURED COURSES</h2>
