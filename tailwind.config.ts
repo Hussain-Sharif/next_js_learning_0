@@ -7,7 +7,7 @@ const {
 } = require("tailwindcss/lib/util/flattenColorPalette");
 const svgToDataUri = require("mini-svg-data-uri");
 
-function addBackground({ matchUtilities, theme }: any) {
+function addBackground({ matchUtilities, theme }: { matchUtilities: any; theme: (key: string) => any }) {
   matchUtilities(
     {
       "bg-grid": (value: any) => ({
@@ -30,7 +30,7 @@ function addBackground({ matchUtilities, theme }: any) {
   );
 }
 
-function addVariablesForColors({ addBase, theme }: any) {
+function addVariablesForColors({ addBase, theme }:  { addBase: any; theme: (key: string) => any }) {
   let allColors = flattenColorPalette(theme("colors"));
   let newVars = Object.fromEntries(
     Object.entries(allColors).map(([key, val]) => [`--${key}`, val])
@@ -44,7 +44,7 @@ function addVariablesForColors({ addBase, theme }: any) {
 
 
 const config: Config = {
-  darkMode:"class",
+  darkMode: "class",
   content: [
     "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
@@ -59,8 +59,8 @@ const config: Config = {
       animation: {
         spotlight: "spotlight 2s ease .75s 1 forwards",
         shimmer: "shimmer 2s linear infinite",
-        scroll:
-          "scroll var(--animation-duration, 40s) var(--animation-direction, forwards) linear infinite",
+        scroll: "scroll var(--animation-duration, 40s) var(--animation-direction, forwards) linear infinite",
+        "meteor-effect": "meteor 5s linear infinite",
       },
       keyframes: {
         spotlight: {
@@ -86,15 +86,22 @@ const config: Config = {
             transform: "translate(calc(-50% - 0.5rem))",
           },
         },
+        meteor: {
+          "0%": { transform: "rotate(215deg) translateX(0)", opacity: "1" },
+          "70%": { opacity: "1" },
+          "100%": {
+            transform: "rotate(215deg) translateX(-500px)",
+            opacity: "0",
+          },
+        },
       },
     },
   },
   plugins: [
     addVariablesForColors,
-    addBackground
+    addBackground,
   ],
 };
-
 
 export default config;
 
